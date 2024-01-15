@@ -34,4 +34,7 @@ func main() {
 	sort.Strings(highScores)
 	fmt.Println(highScores)
 	fmt.Println(sort.StringsAreSorted(highScores))
+
+	//removing slices
+
 }
