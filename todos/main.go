@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 )
 
 type keyValue struct {
@@ -27,7 +28,7 @@ func main() {
 
 	switch option {
 	case 1:
-		read(keyValueSlice)
+		read()
 
 	case 2:
 		write(keyValueSlice)
@@ -36,19 +37,24 @@ func main() {
 }
 
 func write(s []keyValue) {
-	var newItem keyValue
+	var newItem keyValue //type of newItem
 	fmt.Println("what do you want to add? write as '1 'hello world''")
-
 	_, err := fmt.Scan(&newItem.key, &newItem.value)
 	if err != nil {
 		panic(err)
 	}
 	s = append(s, newItem)
-	read(s)
+	content := []byte(fmt.Sprintf("%d,%s", newItem.key, newItem.value))
+	err = os.WriteFile("todo.txt", content, 0644)
+	if err != nil {
+		panic(err)
+	}
 }
 
-func read(s []keyValue) {
-	for _, kv := range s {
-		fmt.Printf("%v.%v \n", kv.key, kv.value)
+func read() {
+	content, err := os.ReadFile("todo.txt")
+	if err != nil {
+		panic(err)
 	}
+	fmt.Println(string(content))
 }
