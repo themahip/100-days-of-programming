@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 )
@@ -39,7 +40,9 @@ func main() {
 func write(s []keyValue) {
 	var newItem keyValue //type of newItem
 	fmt.Println("what do you want to add? write as '1 'hello world''")
-	_, err := fmt.Scan(&newItem.key, &newItem.value)
+	_, err := fmt.Scan(&newItem.key)
+	inputReader := bufio.NewReader(os.Stdin)
+	newItem.value, _ = inputReader.ReadString('\n')
 	if err != nil {
 		panic(err)
 	}
